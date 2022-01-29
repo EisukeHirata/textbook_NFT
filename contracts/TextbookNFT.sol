@@ -16,6 +16,10 @@ contract TextbookNFT is ERC721URIStorage {
         console.log("This is my NFT contract. Whoa!");
     }
 
+    function readTextbook() public {
+        console.log("Finished reading this Textbook NFT!");
+    }
+
     function makeNFT() public {
      // Get the current tokenId, this starts at 0.
     uint256 newItemId = _tokenIds.current();
