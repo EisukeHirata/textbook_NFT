@@ -2,21 +2,25 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
 import "hardhat/console.sol";
+
 
 import { Base64 } from "./libraries/Base64.sol";
 
-contract TextbookNFT is ERC721URIStorage {
+contract TextbookNFT is ERC721URIStorage, Ownable {
 
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
+    event NewNFTMinted(address sender, uint256 tokenId);
 
     constructor()ERC721 ("TextbookNFT", "Textbook") {
         console.log("This is my NFT contract. Whoa!");
     }
 
-    function readTextbook() public {
+    function readTextbook() public onlyOwner {
         console.log("Finished reading this Textbook NFT!");
     }
 
@@ -71,6 +75,7 @@ contract TextbookNFT is ERC721URIStorage {
     _tokenIds.increment();
 
      console.log("An NFT w/ ID %s has been minted to %s", newItemId, msg.sender);
+    emit NewNFTMinted(msg.sender, newItemId);
 
   }
 }
